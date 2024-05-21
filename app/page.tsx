@@ -1,5 +1,8 @@
 "use client";
 
+import { useState } from "react";
+
+import Markdown from "react-markdown";
 import {
   GoogleGenerativeAI,
   HarmCategory,
@@ -7,15 +10,17 @@ import {
 } from "@google/generative-ai";
 
 export default function Home() {
-  // const apiKey = process.env.GEMINI_API_KEY;
-  const apiKey = "API_KEY_GOES_HERE";
+  const [response, setResponse] = useState("");
+  const [userTextInputValue, setUserTextInputValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY as string;
   const genAI = new GoogleGenerativeAI(apiKey);
 
   const model = genAI.getGenerativeModel({
     model: "gemini-1.5-pro-latest",
-    // Try other system instructions and compare 
+    // Try other system instructions and compare
     // (eg. "You are a helpful assistant with the GoGreener web framework. Only answer questions about GoGreener and web developmewnt in general")
-    systemInstruction: "You are an expert in the GoGreener web framework, built with Go. The github repo is: https://github.com/thejimmyg/greener",
+    systemInstruction: "You are an expert in the Golang programming language",
   });
 
   const generationConfig = {
@@ -45,31 +50,45 @@ export default function Home() {
     },
   ];
 
-  let response = "";
-
   async function run() {
+    setIsLoading(true);
+
     const chatSession = model.startChat({
       generationConfig,
       safetySettings,
-      history: [], 
+      history: [],
     });
 
-    const result = await chatSession.sendMessage("how do i link a css file");
+    const result = await chatSession.sendMessage(userTextInputValue);
     // const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
-    response = result.response.text();
+    setResponse(result.response.text());
     // console.log(result.response.text());
-    console.log(response);
+    // console.log(response);
+    // console.log(result);
+    setIsLoading(false);
+  }
+
+  function handleFormChange(event) {
+    setUserTextInputValue(event.target.value);
   }
 
   return (
     <main>
       <h1>GoGreener AI Helper</h1>
 
-      <input></input>
+      <input value={userTextInputValue} onChange={handleFormChange} />
       <button onClick={() => run()}>Ask the AI</button>
-      {/* {result && (
 
-      )}  */}
+      {isLoading && (
+        <div>Sending request...</div>
+      )}
+
+      {response && (
+        <>
+          <Markdown children={response} />
+          {console.log(response)}
+        </>
+      )}
     </main>
   );
 }
