@@ -66,6 +66,7 @@ export default function Home() {
     // console.log(response);
     // console.log(result);
     setIsLoading(false);
+    setUserTextInputValue("");
   }
 
   function handleFormChange(event) {
@@ -74,21 +75,22 @@ export default function Home() {
 
   return (
     <main>
-      <h1>GoGreener AI Helper</h1>
+      <h1>GoGreener</h1>
+      <h2>Ai Helper</h2>
 
-      <input value={userTextInputValue} onChange={handleFormChange} />
-      <button onClick={() => run()}>Ask the AI</button>
-
-      {isLoading && (
-        <div>Sending request...</div>
-      )}
+      {isLoading && <div>Sending request...</div>}
 
       {response && (
-        <>
+        <section className="response">
           <Markdown children={response} />
-          {console.log(response)}
-        </>
+          {/* {console.log(response)} */}
+        </section>
       )}
+
+      <div className="input">
+        <input value={userTextInputValue} onChange={handleFormChange} />
+        <button onClick={() => run()}>Send</button>
+      </div>
     </main>
   );
 }

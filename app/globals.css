@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  color: white;
+  margin: 1rem;
+}
+
+h1,
+h2 {
+  /* margin: 1rem; */
+}
+
+.input {
+  display: flex;
+  width: 700px;
+  margin: auto;
+  justify-content: center;
+  bottom: 1rem;
+}
+
+.response {
+    width: 700px;
+    margin: 2rem auto;
+}
