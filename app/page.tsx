@@ -9,6 +9,7 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+import { ChevronUp } from "lucide-react";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -89,8 +90,20 @@ export default function Home() {
         </section>
 
         <div className="input-container">
-          <input className={`${robotoMono.className} input`} value={userTextInputValue} onChange={handleFormChange} />
-          <button className="submit-btn" onClick={() => run()}>Send</button>
+          <input
+            className={`${robotoMono.className} input`}
+            value={userTextInputValue}
+            onChange={handleFormChange}
+            placeholder="Enter your question"
+          />
+
+          <button className="submit-btn" onClick={() => run()}>
+            {/* <ChevronUp className="btn-icon" color="white" size={24} /> */}
+            <ChevronUp className="btn-icon" size={24} />
+          </button>
+
+          <div className="small-glow"></div>
+          <div className="big-glow"></div>
         </div>
       </main>
     </>

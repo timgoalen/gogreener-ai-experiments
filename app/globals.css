@@ -45,7 +45,7 @@ h2 {
 .input-container {
   position: relative;
   display: flex;
-  height: 3.5rem;
+  height: 3rem;
   width: 700px;
   margin: auto;
   justify-content: center;
@@ -53,7 +53,8 @@ h2 {
 
 .input {
   width: 100%;
-  border: 1px solid #2d2d2d;
+  outline: none;
+  border: 1px solid rgba(30, 30, 30, 0.6);
   border-radius: 50px;
   background: linear-gradient(
     to right,
@@ -74,7 +75,51 @@ h2 {
 }
 
 .submit-btn {
+  border: none;
+  cursor: pointer;
   position: absolute;
-  top: 1rem;
-  right: 8px;
+  top: 16px;
+  right: 20px;
+  height: 16px;
+  width: 16px;
+  opacity: 1;
+  background-color: black;
+}
+
+.btn-icon {
+  position: absolute;
+  top: -3px;
+  right: -4px;
+  color: #f87700;
+  opacity: 0;
+  transition: opacity ease-in 0.2s;
+  cursor: pointer;
+}
+
+.submit-btn:hover .btn-icon {
+  opacity: 1;
+}
+
+.small-glow {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: #f87700;
+  filter: blur(12px);
+}
+
+.big-glow {
+  position: absolute;
+  top: -44px;
+  right: -44px;
+  height: 144px;
+  width: 144px;
+  border-radius: 50%;
+  background-color: #f87700;
+  filter: blur(69px);
+  opacity: 15%;
+  z-index: -1;
 }
