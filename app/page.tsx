@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Roboto_Mono } from "next/font/google";
 
 import Markdown from "react-markdown";
 import {
@@ -8,6 +9,8 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+
+const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
 export default function Home() {
   const [response, setResponse] = useState("");
@@ -60,11 +63,7 @@ export default function Home() {
     });
 
     const result = await chatSession.sendMessage(userTextInputValue);
-    // const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
     setResponse(result.response.text());
-    // console.log(result.response.text());
-    // console.log(response);
-    // console.log(result);
     setIsLoading(false);
     setUserTextInputValue("");
   }
@@ -74,23 +73,26 @@ export default function Home() {
   }
 
   return (
-    <main>
-      <h1>GoGreener</h1>
-      <h2>Ai Helper</h2>
+    <>
+      <header>
+        <h1 className="title">GoGreener</h1>
+        <div>
+          <h2 className="subtitle">AI Helper</h2>
+        </div>
+      </header>
 
-      {isLoading && <div>Sending request...</div>}
+      <main>
+        {isLoading && <div>Sending request...</div>}
 
-      {response && (
         <section className="response">
-          <Markdown children={response} />
-          {/* {console.log(response)} */}
+          {response && <Markdown children={response} />}
         </section>
-      )}
 
-      <div className="input">
-        <input value={userTextInputValue} onChange={handleFormChange} />
-        <button onClick={() => run()}>Send</button>
-      </div>
-    </main>
+        <div className="input-container">
+          <input className={`${robotoMono.className} input`} value={userTextInputValue} onChange={handleFormChange} />
+          <button className="submit-btn" onClick={() => run()}>Send</button>
+        </div>
+      </main>
+    </>
   );
 }

@@ -10,20 +10,71 @@ body {
   margin: 1rem;
 }
 
+header {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
 h1,
 h2 {
   /* margin: 1rem; */
 }
 
-.input {
+.title {
+  font-size: 2rem;
+  /* Inline-block allows the gradient to work */
+  display: inline-block;
+  background: linear-gradient(to right, #fff, #37996b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  display: inline-block;
+  background: linear-gradient(to right, #fff, #9b9b9b);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 90%;
+}
+
+.input-container {
+  position: relative;
   display: flex;
+  height: 3.5rem;
   width: 700px;
   margin: auto;
   justify-content: center;
-  bottom: 1rem;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid #2d2d2d;
+  border-radius: 50px;
+  background: linear-gradient(
+    to right,
+    rgba(30, 30, 30, 0.85),
+    rgba(0, 0, 0, 1)
+  );
+  padding: 1rem;
+  font-size: 1rem;
+  color: white;
 }
 
 .response {
-    width: 700px;
-    margin: 2rem auto;
+  width: 700px;
+  height: 80vh;
+  height: 80dvh;
+  margin: 2rem auto;
+  overflow: auto;
+}
+
+.submit-btn {
+  position: absolute;
+  top: 1rem;
+  right: 8px;
 }
