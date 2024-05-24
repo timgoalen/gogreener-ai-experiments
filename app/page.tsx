@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, ChangeEvent } from "react";
 import { Roboto_Mono } from "next/font/google";
 
 import Markdown from "react-markdown";
@@ -9,7 +9,7 @@ import {
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
-import { ChevronUp } from "lucide-react";
+import { CircleArrowUp } from "lucide-react";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -17,6 +17,8 @@ export default function Home() {
   const [response, setResponse] = useState("");
   const [userTextInputValue, setUserTextInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const ref = useRef<HTMLTextAreaElement>(null);
+
   const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY as string;
   const genAI = new GoogleGenerativeAI(apiKey);
 
@@ -69,41 +71,68 @@ export default function Home() {
     setUserTextInputValue("");
   }
 
-  function handleFormChange(event) {
+  function handleFormChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setUserTextInputValue(event.target.value);
   }
 
+  /**
+   * It handles the textarea resize. Notice that the subtracted number on
+   * `e.target.scrollHeight - 16` is the sum of top and bottom padding.
+   * It's important to keep it up-to-date to avoid flickering.
+   */
+  const handleInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    if (ref.current) {
+      ref.current.style.height = "auto";
+      ref.current.style.height = `${event.target.scrollHeight}px`;
+    }
+  };
+
   return (
     <>
-      <header>
+      {/* <header>
         <h1 className="title">GoGreener</h1>
         <div>
           <h2 className="subtitle">AI Helper</h2>
         </div>
-      </header>
+      </header> */}
 
       <main>
         {isLoading && <div>Sending request...</div>}
 
-        <section className="response">
-          {response && <Markdown children={response} />}
-        </section>
+        <div className="page-container">
+          <section className="response-container">
+            {response && <Markdown children={response} />}
+          </section>
 
-        <div className="input-container">
-          <input
-            className={`${robotoMono.className} input`}
-            value={userTextInputValue}
-            onChange={handleFormChange}
-            placeholder="Enter your question"
-          />
-
-          <button className="submit-btn" onClick={() => run()}>
+          <section className="input-container">
+            <form action="" className="form">
+              <textarea
+                ref={ref}
+                className={`${robotoMono.className}`}
+                name=""
+                id=""
+                rows={1}
+                placeholder="Enter your question"
+                tabIndex={0}
+                onInput={handleInput}
+              ></textarea>
+              <button className="submit-btn" onClick={() => run()}>
+                <CircleArrowUp className="btn-icon" size={24} />
+              </button>
+            </form>
+            {/* <input
+              className={`${robotoMono.className} input`}
+              value={userTextInputValue}
+              onChange={handleFormChange}
+              placeholder="Enter your question"
+            /> */}
+            {/* <button className="submit-btn" onClick={() => run()}> */}
             {/* <ChevronUp className="btn-icon" color="white" size={24} /> */}
-            <ChevronUp className="btn-icon" size={24} />
-          </button>
-
-          <div className="small-glow"></div>
-          <div className="big-glow"></div>
+            {/* <ChevronUp className="btn-icon" size={24} />
+            </button> */}
+            {/* <div className="small-glow"></div> */}
+            {/* <div className="big-glow"></div> */}
+          </section>
         </div>
       </main>
     </>
