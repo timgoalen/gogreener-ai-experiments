@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, ChangeEvent } from "react";
+import { useState, useRef, ChangeEvent, KeyboardEvent } from "react";
 import { Roboto_Mono } from "next/font/google";
 
 import Markdown from "react-markdown";
@@ -71,26 +71,57 @@ export default function Home() {
     setUserTextInputValue("");
   }
 
+  // Store the form text in state
   function handleFormChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setUserTextInputValue(event.target.value);
   }
 
-  // Auto resizes the textarea based on input
-  const handleInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  // Auto resize the textarea based on input.
+  function handleInput(event: ChangeEvent<HTMLTextAreaElement>) {
     if (ref.current) {
       ref.current.style.height = "auto";
-      ref.current.style.height = `${event.target.scrollHeight + 2}px`;
+      ref.current.style.height = `${event.target.scrollHeight}px`;
     }
-  };
+  }
+
+  // 'Shift-Return' for new line, 'Return' to send form.
+  function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.shiftKey) {
+      return;
+    }
+
+    if (event.key === "Enter") {
+      event.preventDefault();
+      console.log("Submitting form:", userTextInputValue);
+      if (ref.current) {
+        // Reset textarea height
+        ref.current.style.height = "auto";
+      }
+      // Reset textarea content
+      setUserTextInputValue("");
+    }
+  }
+
+  // Function to submit form with button click (change for server action)
+  function submitForm(event: ChangeEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log("Submitting form:", userTextInputValue);
+    if (ref.current) {
+      // Reset textarea height
+      ref.current.style.height = "auto";
+    }
+    // Reset textarea content
+    setUserTextInputValue("");
+  }
 
   return (
     <>
-      {/* <header>
+      <header>
         <h1 className="title">GoGreener</h1>
         <div>
           <h2 className="subtitle">AI Helper</h2>
         </div>
-      </header> */}
+      </header>
 
       <main>
         {isLoading && <div>Sending request...</div>}
@@ -101,20 +132,31 @@ export default function Home() {
           </section>
 
           <section className="input-container">
-            <form action="" className="form">
+            <form action="" onSubmit={submitForm} className="form">
               <textarea
                 ref={ref}
                 className={`${robotoMono.className}`}
-                name=""
-                id=""
+                name="user-prompt"
+                id="text-area"
                 rows={1}
                 placeholder="Enter your question"
                 tabIndex={0}
+                value={userTextInputValue}
                 onInput={handleInput}
+                onChange={handleFormChange}
+                onKeyDown={handleKeyDown}
               ></textarea>
-              <button className="submit-btn" onClick={() => run()}>
-                <CircleArrowUp className="btn-icon" size={24} />
-              </button>
+              <div className="btn-container">
+                <div className="small-glow"></div>
+                <button
+                  type="submit"
+                  className="submit-btn"
+                  // onClick={() => submitForm}
+                >
+                  <CircleArrowUp className="btn-icon" size={24} />
+                </button>
+              </div>
+              <div className="big-glow"></div>
             </form>
             {/* <input
               className={`${robotoMono.className} input`}
