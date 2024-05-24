@@ -75,15 +75,11 @@ export default function Home() {
     setUserTextInputValue(event.target.value);
   }
 
-  /**
-   * It handles the textarea resize. Notice that the subtracted number on
-   * `e.target.scrollHeight - 16` is the sum of top and bottom padding.
-   * It's important to keep it up-to-date to avoid flickering.
-   */
+  // Auto resizes the textarea based on input
   const handleInput = (event: ChangeEvent<HTMLTextAreaElement>) => {
     if (ref.current) {
       ref.current.style.height = "auto";
-      ref.current.style.height = `${event.target.scrollHeight}px`;
+      ref.current.style.height = `${event.target.scrollHeight + 2}px`;
     }
   };
 
