@@ -89,10 +89,10 @@ export default function Home() {
     if (event.shiftKey) {
       return;
     }
-
     if (event.key === "Enter") {
       event.preventDefault();
       console.log("Submitting form:", userTextInputValue);
+      run();
       if (ref.current) {
         // Reset textarea height
         ref.current.style.height = "auto";
@@ -106,6 +106,7 @@ export default function Home() {
   function submitForm(event: ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
     console.log("Submitting form:", userTextInputValue);
+    run();
     if (ref.current) {
       // Reset textarea height
       ref.current.style.height = "auto";
@@ -128,7 +129,9 @@ export default function Home() {
 
         <div className="page-container">
           <section className="response-container">
-            {response && <Markdown children={response} />}
+            <div className="response-content">
+              {response && <Markdown children={response} />}
+            </div>
           </section>
 
           <section className="input-container">
@@ -148,28 +151,12 @@ export default function Home() {
               ></textarea>
               <div className="btn-container">
                 <div className="small-glow"></div>
-                <button
-                  type="submit"
-                  className="submit-btn"
-                  // onClick={() => submitForm}
-                >
+                <button type="submit" className="submit-btn">
                   <CircleArrowUp className="btn-icon" size={24} />
                 </button>
               </div>
               <div className="big-glow"></div>
             </form>
-            {/* <input
-              className={`${robotoMono.className} input`}
-              value={userTextInputValue}
-              onChange={handleFormChange}
-              placeholder="Enter your question"
-            /> */}
-            {/* <button className="submit-btn" onClick={() => run()}> */}
-            {/* <ChevronUp className="btn-icon" color="white" size={24} /> */}
-            {/* <ChevronUp className="btn-icon" size={24} />
-            </button> */}
-            {/* <div className="small-glow"></div> */}
-            {/* <div className="big-glow"></div> */}
           </section>
         </div>
       </main>
