@@ -130,7 +130,7 @@ export default function Home() {
         <div className="page-container">
           <section className="response-container">
             <div className="response-content">
-              {response && <Markdown children={response} />}
+              {response && <Markdown>{response}</Markdown>}
             </div>
           </section>
 
