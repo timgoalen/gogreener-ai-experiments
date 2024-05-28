@@ -47,7 +47,7 @@ header {
 }
 
 .response-container {
-  overflow: auto;
+  overflow: scroll;
   padding: 1rem;
 }
 
@@ -55,7 +55,6 @@ header {
   width: 740px;
   height: 100%;
   margin: auto;
-  overflow: hidden;
 }
 
 .response-content * {
@@ -73,14 +72,14 @@ header {
 }
 
 .response-content pre {
-  font: 400 0.875rem/1.125rem monospace;
+  /* font: 400 0.875rem/1.125rem monospace;
   display: block;
   overflow-x: auto;
   padding: 16px 16px 22px;
   direction: ltr;
   background-color: #121212;
   border-radius: 12px;
-  margin: 1rem 0;
+  margin: 1rem 0; */
 }
 
 code {
@@ -89,6 +88,11 @@ code {
   background-color: #282828;
   border-radius: 6px;
   padding: 2px 8px 4px 8px;
+}
+
+code .hljs {
+  background: #8f3737;
+  color: #444;
 }
 
 .input-container {

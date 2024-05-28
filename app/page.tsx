@@ -3,13 +3,17 @@
 import { useState, useRef, ChangeEvent, KeyboardEvent } from "react";
 import { Roboto_Mono } from "next/font/google";
 
-import Markdown from "react-markdown";
 import {
   GoogleGenerativeAI,
   HarmCategory,
   HarmBlockThreshold,
 } from "@google/generative-ai";
+import Markdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/default.css";
 import { CircleArrowUp } from "lucide-react";
+
+import MarkdownWithSyntaxHighlight from "../app/utils/markdownRenderer";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -130,7 +134,11 @@ export default function Home() {
         <div className="page-container">
           <section className="response-container">
             <div className="response-content">
-              {response && <Markdown>{response}</Markdown>}
+              {response && (
+                <MarkdownWithSyntaxHighlight>
+                  {response}
+                </MarkdownWithSyntaxHighlight>
+              )}
             </div>
           </section>
 
