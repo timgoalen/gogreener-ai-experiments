@@ -46,6 +46,12 @@ header {
   overflow: hidden;
 }
 
+.loading-text {
+  position: absolute;
+  top: 1rem;
+  left: 43%;
+}
+
 .response-container {
   overflow: scroll;
   padding: 1rem;

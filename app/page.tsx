@@ -14,6 +14,7 @@ import "highlight.js/styles/default.css";
 import { CircleArrowUp } from "lucide-react";
 
 import MarkdownWithSyntaxHighlight from "../app/utils/markdownRenderer";
+import { testData } from "@/app/lib/frameworkTestData";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"] });
 
@@ -28,13 +29,11 @@ export default function Home() {
 
   const model = genAI.getGenerativeModel({
     model: "gemini-1.5-pro-latest",
-    // Try other system instructions and compare
-    // (eg. "You are a helpful assistant with the GoGreener web framework. Only answer questions about GoGreener and web developmewnt in general")
-    systemInstruction: "You are an expert in the Golang programming language",
+    systemInstruction: `You are a helpful assistant with the GoGreener web framework. Only answer questions about GoGreener and web developmewnt in general. Codebase: ${testData}`,
   });
 
   const generationConfig = {
-    temperature: 1,
+    temperature: 0.5,
     topP: 0.95,
     topK: 64,
     maxOutputTokens: 8192,
@@ -129,7 +128,7 @@ export default function Home() {
       </header>
 
       <main>
-        {isLoading && <div>Sending request...</div>}
+        {isLoading && <div className="loading-text">Sending request...</div>}
 
         <div className="page-container">
           <section className="response-container">
